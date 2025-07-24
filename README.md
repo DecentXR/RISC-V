@@ -24,7 +24,6 @@ This repository contains two distinct Verilog implementations of a processor tha
   - [Simulating the Pipelined CPU](#simulating-the-pipelined-cpu)
 - [Testing a Program](#-testing-a-program)
 - [Contributing](#-contributing)
-- [License](#-license)
 
 ---
 
@@ -51,7 +50,16 @@ This processor uses a straightforward design where the entire execution of an in
 
 ### Project Structure (Single-Cycle)
 
-single-cycle/├── t2b_riscv_cpu.v     # Top-level wrapper for simulation├── riscv_cpu.v         # Core CPU module (connects datapath & controller)├── controller.v        # Control logic and decoders├── datapath.v          # Datapath components (ALU, Reg File, Muxes)├── instr_mem.v         # Instruction Memory├── data_mem.v          # Data Memory└── program_dump.hex    # Hex program file
+The single-cycle processor is contained within the `single-cycle/` directory and includes the following key files:
+
+* **`t2b_riscv_cpu.v`**: Top-level wrapper for simulation and integration.
+* **`riscv_cpu.v`**: The core CPU module that connects the datapath and controller.
+* **`controller.v`**: Contains the control logic and instruction decoders.
+* **`datapath.v`**: Contains the main datapath components like the ALU, Register File, and multiplexers.
+* **`instr_mem.v`**: Instruction Memory module.
+* **`data_mem.v`**: Data Memory module.
+* **`program_dump.hex`**: The hex file containing the program to be executed.
+
 ---
 
 ## 5️⃣ 5-Stage Pipelined Implementation
@@ -68,11 +76,23 @@ This processor improves performance by breaking down instruction execution into 
 * **Hazard Management:**
     * **Data Hazards:** A `hazard_unit.v` implements data forwarding (bypassing) to prevent most stalls.
     * **Control Hazards:** A `branch_detection.v` unit manages branches by flushing the pipeline to ensure correct program execution.
-* **Modular Stage-Based Design:** Each pipeline stage is encapsulated in its own Verilog module (e.g., `fetch_cycle.v`, `decode_cycle.v`).
+* **Modular Stage-Based Design:** Each pipeline stage is encapsulated in its own Verilog module.
 
 ### Project Structure (Pipelined)
 
-pipelined/├── pipeline_tb.v           # Top-level testbench├── pipeline_cpu.v          # Top-level module connecting all stages├── fetch_cycle.v           # Instruction Fetch (IF) stage├── decode_cycle.v          # Instruction Decode (ID) stage├── execution_cycle.v       # Execute (EX) stage├── memory_cycle.v          # Memory (MEM) stage├── write_back.v            # Write-Back (WB) stage├── hazard_unit.v           # Data hazard detection & forwarding├── branch_detection.v      # Control hazard handling & flushing└── memfile.hex             # Hex program file
+The pipelined processor is contained within the `pipelined/` directory and includes the following key files:
+
+* **`pipeline_tb.v`**: The top-level testbench for simulation.
+* **`pipeline_cpu.v`**: The top-level module connecting all pipeline stages and hazard units.
+* **`fetch_cycle.v`**: Logic for the Instruction Fetch (IF) stage.
+* **`decode_cycle.v`**: Logic for the Instruction Decode (ID) stage.
+* **`execution_cycle.v`**: Logic for the Execute (EX) stage.
+* **`memory_cycle.v`**: Logic for the Memory (MEM) stage.
+* **`write_back.v`**: Logic for the Write-Back (WB) stage.
+* **`hazard_unit.v`**: Handles data hazard detection and forwarding.
+* **`branch_detection.v`**: Manages control hazards and pipeline flushing.
+* **`memfile.hex`**: The hex file containing the program to be executed.
+
 ---
 
 ## 📚 Instruction Set Coverage
@@ -140,9 +160,3 @@ Contributions are welcome! If you have suggestions for improvements or find any 
 3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4.  Push to the Branch (`git push origin feature/AmazingFeature`)
 5.  Open a Pull Request
-
----
-
-## 📄 License
-
-This project is distributed under the MIT License. See `LICENSE.txt` for more information.
