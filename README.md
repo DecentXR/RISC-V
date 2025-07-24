@@ -78,6 +78,71 @@ pipelined/├── pipeline_tb.v           # Top-level testbench├── pipel
 ## 📚 Instruction Set Coverage
 
 Both processors implement a significant portion of the **RV32I** base integer instruction set, including:
+
 * **Load/Store:** `LW`, `SW`, `LB`, `LH`, `SB`, `SH`, `LBU`, `LHU`
 * **Arithmetic:** `ADD`, `SUB`, `ADDI`
-* **Logical:** `AND`, `OR`,...
+* **Logical:** `AND`, `OR`, `XOR`, `SLT`, `SLL`, `SRL`, `SRA` and their immediate variants.
+* **Control Flow:** `BEQ`, `BNE`, `BLT`, `BGE`, `JAL`, `JALR`
+* **Upper Immediate:** `LUI`, `AUIPC`
+
+---
+
+## 🚀 Getting Started: Simulation
+
+### Prerequisites
+
+You will need a Verilog simulator. The following are common choices:
+* [Verilator](https://verilator.org/guide/latest/install.html) (Open-source, recommended)
+* [Icarus Verilog](http://iverilog.icarus.com/)
+* [ModelSim](https://www.intel.com/content/www/us/en/software-kit/665978/modelsim-intel-fpgas-standard-edition-software-version-18-1.html)
+
+### Simulating the Single-Cycle CPU
+
+1.  Navigate to the `single-cycle/` directory.
+2.  Ensure you have a testbench that instantiates `t2b_riscv_cpu`.
+3.  Compile and run using your simulator.
+    *Example with Verilator:*
+    ```bash
+    verilator --cc --exe --build -j 0 your_testbench.v --top-module your_tb_module
+    ./obj_dir/Vyour_tb_module
+    ```
+
+### Simulating the Pipelined CPU
+
+1.  Navigate to the `pipelined/` directory.
+2.  Use the provided `pipeline_tb.v` as your top-level testbench.
+3.  Compile and run using your simulator.
+    *Example with Verilator:*
+    ```bash
+    verilator --cc --exe --build -j 0 pipeline_tb.v --top-module tb
+    ./obj_dir/Vtb
+    ```
+4.  View the output `dump.vcd` file with a waveform viewer like GTKWave.
+
+---
+
+## 🧪 Testing a Program
+
+To run a custom program on either processor:
+1.  Write your program in RISC-V assembly (`.s`).
+2.  Use a RISC-V toolchain to assemble it and produce a hex file.
+3.  Replace the contents of the relevant hex file (`program_dump.hex` or `memfile.hex`) with your new program.
+4.  Rerun the simulation.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! If you have suggestions for improvements or find any bugs, please feel free to open an issue or submit a pull request.
+
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is distributed under the MIT License. See `LICENSE.txt` for more information.
